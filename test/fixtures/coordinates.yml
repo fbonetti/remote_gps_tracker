@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  latitude: 
+  longitude: 
+  timestamp: 2013-11-30 16:48:46
+
+two:
+  latitude: 
+  longitude: 
+  timestamp: 2013-11-30 16:48:46
