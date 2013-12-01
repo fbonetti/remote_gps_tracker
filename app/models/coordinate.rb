@@ -11,10 +11,10 @@ class Coordinate < ActiveRecord::Base
         SELECT *, row_number() over (order by created_at) as rn
         FROM coordinates
       )
-      SELECT sum(geodistance_km(c1.latitude, c1.longitude, c2.latitude, c2.longitude)) as miles
+      SELECT sum(geodistance_km(c1.latitude, c1.longitude, c2.latitude, c2.longitude)) as km
       FROM rows c1
       JOIN rows c2 on c1.rn = c2.rn - 1;
-    ").first["miles"].to_f
+    ").first["km"].to_f
   end
 
   def self.total_miles_travelled
@@ -29,10 +29,10 @@ class Coordinate < ActiveRecord::Base
         FROM coordinates
       )
       SELECT sum(geodistance_km(c1.latitude, c1.longitude, c2.latitude, c2.longitude)) /
-             (select extract(epoch from max(c2.timestamp) - min(c1.timestamp))/3600) as mph
+             (select extract(epoch from max(c2.timestamp) - min(c1.timestamp))/3600) as kmh
       FROM rows c1
       JOIN rows c2 on c1.rn = c2.rn - 1;
-    ").first["mph"].to_f
+    ").first["kmh"].to_f
   end
 
   def self.average_mph
@@ -40,7 +40,13 @@ class Coordinate < ActiveRecord::Base
   end
 
   def self.average_transmission_delay
-    Coordinate.average("date_part('epoch', avg(timestamp - created_at))").to_f
+    Coordinate.select("date_part('epoch', avg(created_at - timestamp)) as seconds")[0].seconds.to_f
+  end
+
+  private
+
+  def km_to_miles(km)
+    km * 0.621371
   end
 
 end
