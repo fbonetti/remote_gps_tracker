@@ -1,4 +1,8 @@
 class Coordinate < ActiveRecord::Base
+  validates :latitude,  numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }
+  validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
+  validates :altitude,  numericality: true
+  validates :timestamp, presence: true
 
   def self.total_km_travelled
     ActiveRecord::Base.connection.execute("
