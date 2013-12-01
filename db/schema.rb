@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20131130224846) do
   create_table "coordinates", force: true do |t|
     t.float    "latitude"
     t.float    "longitude"
+    t.float    "altitude"
     t.datetime "timestamp"
     t.datetime "created_at"
     t.datetime "updated_at"
