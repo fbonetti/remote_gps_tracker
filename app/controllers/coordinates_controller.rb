@@ -1,7 +1,8 @@
 class CoordinatesController < ApplicationController
 
   def index
-    @coordinates = Coordinate.all
+    @dates = Coordinate.unique_dates
+    @coordinate_array = Coordinate.all.map { |coordinate| [coordinate.latitude, coordinate.longitude] }
   end
 
   def create

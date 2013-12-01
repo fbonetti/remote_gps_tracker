@@ -43,6 +43,10 @@ class Coordinate < ActiveRecord::Base
     Coordinate.select("date_part('epoch', avg(created_at - timestamp)) as seconds")[0].seconds.to_f
   end
 
+  def self.unique_dates
+    Coordinate.distinct.select("(timestamp at time zone '-6')::date as date").map(&:date).sort
+  end
+
   private
 
   def self.km_to_miles(km)

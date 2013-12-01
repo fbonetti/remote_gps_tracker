@@ -1,31 +1,9 @@
 <h1>Listing coordinates</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th>Timestamp</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div id="map-canvas"></div>
 
-  <tbody>
-    <% @coordinates.each do |coordinate| %>
-      <tr>
-        <td><%= coordinate.latitude %></td>
-        <td><%= coordinate.longitude %></td>
-        <td><%= coordinate.timestamp %></td>
-        <td><%= link_to 'Show', coordinate %></td>
-        <td><%= link_to 'Edit', edit_coordinate_path(coordinate) %></td>
-        <td><%= link_to 'Destroy', coordinate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Coordinate', new_coordinate_path %>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script>
+  map = new Map(<%= @coordinate_array.to_json %>);
+  map.initialize();
+</script>
