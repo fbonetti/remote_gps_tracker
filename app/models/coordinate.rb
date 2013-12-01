@@ -45,7 +45,7 @@ class Coordinate < ActiveRecord::Base
 
   private
 
-  def km_to_miles(km)
+  def self.km_to_miles(km)
     km * 0.621371
   end
 
