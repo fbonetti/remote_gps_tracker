@@ -13,7 +13,7 @@ class CoordinatesController < ApplicationController
       altitude: altitude.to_f, timestamp: timestamp
     )
 
-    render nothing: true
+    render nothing: true, status: 200
   end
 
 end
