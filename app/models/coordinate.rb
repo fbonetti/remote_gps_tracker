@@ -1,8 +1,14 @@
 class Coordinate < ActiveRecord::Base
-  validates :latitude,  numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }
+  validates :latitude,  numericality: { greater_than_or_equal_to: -90,  less_than_or_equal_to: 90 }
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
   validates :altitude,  numericality: true
   validates :timestamp, presence: true
+
+  US_CENTRAL = 'US/Central'
+
+  def self.find_by_date(date, timezone = US_CENTRAL)
+    Coordinate.where("(timestamp::timestamptz at time zone ?)::date = ?", timezone, date)
+  end
 
   def self.total_km_travelled
     ActiveRecord::Base.connection.execute("
@@ -39,12 +45,15 @@ class Coordinate < ActiveRecord::Base
     km_to_miles(average_kmh)
   end
 
+  # Measures the delay between when a gps data point is initially, sent to Twilio,
+  # and then finally stored in the database
   def self.average_transmission_delay
-    Coordinate.select("date_part('epoch', avg(created_at - timestamp)) as seconds")[0].seconds.to_f
+    Coordinate.average("date_part('epoch', created_at) - date_part('epoch', timestamp)").to_f
   end
 
-  def self.unique_dates
-    Coordinate.distinct.select("(timestamp at time zone '-6')::date as date").map(&:date).sort
+  # Central Time Zone
+  def self.unique_dates(timezone = US_CENTRAL)
+    Coordinate.select("(timestamp::timestamptz at time zone '#{timezone}')::date as date").distinct.map(&:date).sort
   end
 
   private
