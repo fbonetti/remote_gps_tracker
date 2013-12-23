@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 gem 'thin', '1.6.1'
+gem "twitter-bootstrap-rails"
 
 # Use PostgresQL as the database for Active Record
 gem 'pg'

@@ -1,7 +1,13 @@
-<h1>Listing coordinates</h1>
-
-<div id="map-canvas"></div>
-
+<div class="container-fluid" style="height:100%">
+  <div class="row-fluid" style="height:100%">
+    <div class="span9" style="height:100%" id="map-canvas"></div>
+    <div class="span3" style="height:100%" id="map-info"</div>
+      <h2>Stats</h2>
+      <p>Current location:</p>
+      <p><%= @latest_coordinate.location.primary_city + ", " + @latest_coordinate.location.state + " " + @latest_coordinate.location.zip %></p>
+    </div>
+  </div>
+</div>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script>
   map = new Map(<%= @coordinate_array.to_json %>);

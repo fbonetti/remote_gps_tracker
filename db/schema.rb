@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201164835) do
+ActiveRecord::Schema.define(version: 20131223184837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,9 +20,32 @@ ActiveRecord::Schema.define(version: 20131201164835) do
     t.float    "latitude"
     t.float    "longitude"
     t.float    "altitude"
-    t.datetime "timestamp"
+    t.datetime "gps_timestamp"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "location_id"
   end
+
+  create_table "locations", force: true do |t|
+    t.text    "zip"
+    t.text    "type"
+    t.text    "primary_city"
+    t.text    "acceptable_cities"
+    t.text    "unacceptable_cities"
+    t.text    "state"
+    t.text    "county"
+    t.text    "timezone"
+    t.text    "area_codes"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.text    "world_region"
+    t.text    "country"
+    t.text    "decommissioned"
+    t.integer "estimated_population"
+    t.text    "notes"
+  end
+
+  add_index "locations", ["latitude"], name: "index_locations_on_latitude", using: :btree
+  add_index "locations", ["longitude"], name: "index_locations_on_longitude", using: :btree
 
 end

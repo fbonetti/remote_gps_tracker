@@ -2,6 +2,7 @@ Map = function(coordinates) {
   var _this = this;
   _this.coordinates = coordinates;
   _this.markers = [];
+  _this.last_index = _this.coordinates.length - 1;
 
   _this.initialize = function() {
     createMap();
@@ -9,7 +10,7 @@ Map = function(coordinates) {
   }
 
   var createMap = function() {
-    var myLatlng = new google.maps.LatLng(41.901389, -87.676944);
+    var myLatlng = new google.maps.LatLng(_this.coordinates[_this.last_index][0], _this.coordinates[_this.last_index][1]);
     var mapOptions = {
       zoom: 12,
       center: myLatlng
@@ -20,11 +21,14 @@ Map = function(coordinates) {
 
   var generateMarkers = function() {
     for (var i = 0; i < _this.coordinates.length; i++) {
-      var marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
         position: new google.maps.LatLng(coordinates[i][0], coordinates[i][1]),
         map: _this.map,
         title: coordinates[i].join(", ")
       });
+
+      if (i == _this.last_index)
+        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
 
       _this.markers.push(marker);
     }
