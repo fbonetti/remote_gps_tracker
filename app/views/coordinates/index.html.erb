@@ -3,8 +3,16 @@
     <div class="span9" style="height:100%" id="map-canvas"></div>
     <div class="span3" style="height:100%" id="map-info"</div>
       <h2>Stats</h2>
-      <p>Current location:</p>
-      <p><%= @latest_coordinate.location.primary_city + ", " + @latest_coordinate.location.state + " " + @latest_coordinate.location.zip %></p>
+      <strong>Current location:</strong>
+      <p><%= @latest_coordinate.formatted_location %></p>
+      <strong>Altitude:</strong>
+      <p><%= @latest_coordinate.altitude.to_s + " meters" %></p>
+      <strong>Timestamp:</strong>
+      <p><%= @latest_coordinate.formatted_gps_timestamp %></p>
+      </br>
+      <% @unique_dates.each do |date| %>
+        <p><%= link_to date, coordinates_path(date: date) %></p>
+      <% end %>
     </div>
   </div>
 </div>

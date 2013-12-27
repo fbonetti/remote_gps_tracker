@@ -57,7 +57,7 @@ class Coordinate < ActiveRecord::Base
 
   # Central Time Zone
   def self.unique_dates(timezone = US_CENTRAL)
-    Coordinate.select("(gps_timestamp::timestamptz at time zone '#{timezone}')::date as date").distinct.map(&:date).sort
+    Coordinate.select("(gps_timestamp::timestamptz at time zone '#{timezone}')::date as date").distinct.map(&:date).sort.reverse
   end
 
   private

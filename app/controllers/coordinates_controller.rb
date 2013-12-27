@@ -1,9 +1,10 @@
 class CoordinatesController < ApplicationController
 
   def index
-    @dates = Coordinate.unique_dates
-    @coordinate_array = Coordinate.all.map { |coordinate| [coordinate.latitude, coordinate.longitude] }
-    @latest_coordinate = Coordinate.eager_load(:location).last
+    @unique_dates = Coordinate.unique_dates
+    coordinates = (params[:date] ? Coordinate.find_by_date(params[:date]) : Coordinate.all)
+    @coordinate_array = coordinates.map { |coordinate| [coordinate.latitude, coordinate.longitude] }
+    @latest_coordinate = CoordinatePresenter.new(Coordinate.eager_load(:location).last)
   end
 
   def create
