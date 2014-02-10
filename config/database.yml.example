@@ -1,0 +1,29 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: remote_gps_tracker_development
+  pool: 5
+  timeout: 5000
+  host: localhost
+  username: ###
+  password: ###
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: remote_gps_tracker_test
+  pool: 5
+  timeout: 5000
+  host: localhost
+  username: ###
+  password: ###
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: remote_gps_tracker_production
+  pool: 5
+  timeout: 5000
+  host: localhost
+  username: ###
+  password: ###
